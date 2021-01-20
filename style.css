@@ -1,0 +1,43 @@
+.timer {
+  display: flex;
+}
+.field {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px;
+}
+.value {
+  display: flex;
+}
+.number-styles {
+  color: #ffffff;
+  display: inline-block;
+
+  font-size: 50px;
+  background-color: #333344;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 20px 1px;
+}
+
+.rotate {
+  transform: rotateX(0deg);
+  transition: transform 250ms linear;
+}
+.rotate-back {
+  transform: rotateX(360deg);
+  transition: transform 250ms linear;
+}
+
+/* .rotate .number-styles {
+  background-color: blue;
+} */
+
+.label {
+  text-align: center;
+  margin-top: 0px;
+  color: #991100;
+  font-size: 18px;
+  font-weight: bold;
+}
