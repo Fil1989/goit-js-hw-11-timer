@@ -1,7 +1,7 @@
 class CountdownTimer {
   constructor() {
     this.selector = '#timer-1';
-    this.targetDate = new Date(2021, 4, 1, 19, 2, 0);
+    this.targetDate = new Date(2021, 4, 1, 19, 22, 0);
   }
 }
 const timerGenerated = new CountdownTimer();
@@ -85,6 +85,9 @@ function stylesOfNumbers(value, selector) {
     selector
       .querySelector('.value-second')
       .insertAdjacentHTML('afterbegin', `${value}`[1]);
+    if (value === 99) {
+      selector.querySelector('.value-third').remove();
+    }
     if (
       previousNumberFirst !== selector.querySelector('.value-first').textContent
     ) {
@@ -123,11 +126,10 @@ function stylesOfNumbers(value, selector) {
     selector
       .querySelector('.value-second')
       .insertAdjacentHTML('afterbegin', `${value}`[1]);
-    if (`${value}`.length > 2) {
-      selector
-        .querySelector('.value-third')
-        .insertAdjacentHTML('afterbegin', `${value}`[2]);
-    } else {
+    selector
+      .querySelector('.value-third')
+      .insertAdjacentHTML('afterbegin', `${value}`[2]);
+    if (value === 99) {
       selector.querySelector('.value-third').remove();
     }
     if (
