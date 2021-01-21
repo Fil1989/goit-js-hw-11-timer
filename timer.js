@@ -85,7 +85,7 @@ function stylesOfNumbers(value, selector) {
     selector
       .querySelector('.value-second')
       .insertAdjacentHTML('afterbegin', `${value}`[1]);
-    if (value === 99) {
+    if (value === 99 && selector.querySelector('.value-third') != null) {
       selector.querySelector('.value-third').remove();
     }
     if (
