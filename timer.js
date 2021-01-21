@@ -1,7 +1,7 @@
 class CountdownTimer {
   constructor() {
     this.selector = '#timer-1';
-    this.targetDate = new Date(2021, 5, 22, 9, 0, 0);
+    this.targetDate = new Date(2021, 4, 1, 19, 2, 0);
   }
 }
 const timerGenerated = new CountdownTimer();
@@ -10,24 +10,33 @@ const dedline = timerGenerated.targetDate;
 const timeToday = new Date();
 
 let timerSet = null;
-const daysSelector = document.querySelector('span[data-value="days"]');
-const hoursSelector = document.querySelector('span[data-value="hours"]');
-const minutesSelector = document.querySelector('span[data-value="mins"]');
-const secondsSelector = document.querySelector('span[data-value="secs"]');
+const daysSelector = document.querySelector('div[data-value="days"]');
+const hoursSelector = document.querySelector('div[data-value="hours"]');
+const minutesSelector = document.querySelector('div[data-value="mins"]');
+const secondsSelector = document.querySelector('div[data-value="secs"]');
 
 const time = dedline.getTime() - timeToday.getTime();
 
 let days = Math.floor(time / (1000 * 60 * 60 * 24));
-daysSelector.textContent = days;
+daysSelector.querySelector('.value-first').textContent[0] = `${days}`[0];
+daysSelector.querySelector('.value-second').textContent[1] = `${days}`[1];
+if (`${days}`.length > 2) {
+  daysSelector.querySelector('.value-third').textContent[2] = `${days}`[2];
+} else {
+  daysSelector.querySelector('.value-third').remove();
+}
 
 let hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-hoursSelector.textContent = hours;
+hoursSelector.querySelector('.value-first').textContent[0] = `${hours}`[0];
+hoursSelector.querySelector('.value-second').textContent[1] = `${hours}`[1];
 
 let mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-minutesSelector.textContent = mins;
+minutesSelector.querySelector('.value-first').textContent[0] = `${mins}`[0];
+minutesSelector.querySelector('.value-second').textContent[1] = `${mins}`[1];
 
 let secs = Math.floor((time % (1000 * 60)) / 1000);
-secondsSelector.textContent = secs;
+secondsSelector.querySelector('.value-first').textContent[0] = `${secs}`[0];
+secondsSelector.querySelector('.value-second').textContent[1] = `${secs}`[1];
 
 stylesOfNumbers(secs, secondsSelector);
 stylesOfNumbers(mins, minutesSelector);
@@ -36,51 +45,109 @@ stylesOfNumbers(days, daysSelector);
 
 function stylesOfNumbers(value, selector) {
   if (value < 10) {
-    let previousNumber = selector.textContent;
-    selector.textContent = '';
-    selector.insertAdjacentHTML(
-      'afterbegin',
-      `<span class="number-styles">0</span><span class="number-styles">${value}</span>`,
-    );
-    if (previousNumber !== selector.textContent[1]) {
-      selector.classList.toggle('rotate');
-      selector.classList.toggle('rotate-back');
-    }
-  } else if (value >= 10 && value <= 99) {
-    let previousNumber = selector.textContent;
-    selector.textContent = '';
-    selector.insertAdjacentHTML(
-      'afterbegin',
-      '<span class="number-styles">' +
-        `${value}`[0] +
-        '</span>' +
-        '<span class="number-styles rotate">' +
-        `${value}`[1] +
-        '</span>',
-    );
-    if (previousNumber !== selector.textContent) {
-      selector.classList.toggle('rotate');
-      selector.classList.toggle('rotate-back');
-    }
-  } else if (value > 99) {
-    let previousNumber = selector.textContent;
+    let previousNumberFirst = selector.querySelector('.value-first')
+      .textContent;
 
-    selector.textContent = '';
-    selector.insertAdjacentHTML(
-      'afterbegin',
-      '<span class="number-styles">' +
-        `${value}`[0] +
-        '</span>' +
-        '<span class="number-styles">' +
-        `${value}`[1] +
-        '</span>' +
-        '<span class="number-styles">' +
-        `${value}`[2] +
-        '</span>',
-    );
-    if (previousNumber !== selector.textContent) {
-      selector.classList.toggle('rotate');
-      selector.classList.toggle('rotate-back');
+    let previousNumberSecond = selector.querySelector('.value-second')
+      .textContent;
+    selector.querySelector('.value-first').textContent = '';
+    selector.querySelector('.value-second').textContent = '';
+    selector
+      .querySelector('.value-first')
+      .insertAdjacentHTML('afterbegin', '0');
+    selector
+      .querySelector('.value-second')
+      .insertAdjacentHTML('afterbegin', `${value}`);
+    if (
+      previousNumberFirst !== selector.querySelector('.value-first').textContent
+    ) {
+      selector.querySelector('.value-first').classList.toggle('rotate');
+      selector.querySelector('.value-first').classList.toggle('rotate-back');
+    }
+    if (
+      previousNumberSecond !==
+      selector.querySelector('.value-second').textContent
+    ) {
+      selector.querySelector('.value-second').classList.toggle('rotate');
+      selector.querySelector('.value-second').classList.toggle('rotate-back');
+    }
+  } else if (value >= 10 && value < 99) {
+    let previousNumberFirst = selector.querySelector('.value-first')
+      .textContent;
+
+    let previousNumberSecond = selector.querySelector('.value-second')
+      .textContent;
+    selector.querySelector('.value-first').textContent = '';
+    selector.querySelector('.value-second').textContent = '';
+    selector
+      .querySelector('.value-first')
+      .insertAdjacentHTML('afterbegin', `${value}`[0]);
+    selector
+      .querySelector('.value-second')
+      .insertAdjacentHTML('afterbegin', `${value}`[1]);
+    if (
+      previousNumberFirst !== selector.querySelector('.value-first').textContent
+    ) {
+      selector.querySelector('.value-first').classList.toggle('rotate');
+      selector.querySelector('.value-first').classList.toggle('rotate-back');
+    }
+    if (
+      previousNumberSecond !==
+      selector.querySelector('.value-second').textContent
+    ) {
+      selector.querySelector('.value-second').classList.toggle('rotate');
+      selector.querySelector('.value-second').classList.toggle('rotate-back');
+
+      // if (value % 2 === 0) {
+      //   selector.querySelector('.value-second').classList.remove('rotate');
+      //   selector.querySelector('.value-second').classList.add('rotate-back');
+      // } else {
+      //   selector.querySelector('.value-second').classList.remove('rotate-back');
+      //   selector.querySelector('.value-second').classList.add('rotate');
+      // }
+    }
+  } else if (value >= 99) {
+    let previousNumberFirst = selector.querySelector('.value-first')
+      .textContent;
+
+    let previousNumberSecond = selector.querySelector('.value-second')
+      .textContent;
+    let previousNumberThird = selector.querySelector('.value-third')
+      .textContent;
+    selector.querySelector('.value-first').textContent = '';
+    selector.querySelector('.value-second').textContent = '';
+    selector.querySelector('.value-third').textContent = '';
+    selector
+      .querySelector('.value-first')
+      .insertAdjacentHTML('afterbegin', `${value}`[0]);
+    selector
+      .querySelector('.value-second')
+      .insertAdjacentHTML('afterbegin', `${value}`[1]);
+    if (`${value}`.length > 2) {
+      selector
+        .querySelector('.value-third')
+        .insertAdjacentHTML('afterbegin', `${value}`[2]);
+    } else {
+      selector.querySelector('.value-third').remove();
+    }
+    if (
+      previousNumberFirst !== selector.querySelector('.value-first').textContent
+    ) {
+      selector.querySelector('.value-first').classList.toggle('rotate');
+      selector.querySelector('.value-first').classList.toggle('rotate-back');
+    }
+    if (
+      previousNumberSecond !==
+      selector.querySelector('.value-second').textContent
+    ) {
+      selector.querySelector('.value-second').classList.toggle('rotate');
+      selector.querySelector('.value-second').classList.toggle('rotate-back');
+    }
+    if (
+      previousNumberThird !== selector.querySelector('.value-third').textContent
+    ) {
+      selector.querySelector('.value-third').classList.toggle('rotate');
+      selector.querySelector('.value-third').classList.toggle('rotate-back');
     }
   }
 }

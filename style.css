@@ -10,7 +10,9 @@
 .value {
   display: flex;
 }
-.number-styles {
+.value-first,
+.value-second,
+.value-third {
   color: #ffffff;
   display: inline-block;
 
