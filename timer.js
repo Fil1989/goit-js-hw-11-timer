@@ -71,7 +71,7 @@ function stylesOfNumbers(value, selector) {
       selector.querySelector('.value-second').classList.toggle('rotate');
       selector.querySelector('.value-second').classList.toggle('rotate-back');
     }
-  } else if (value >= 10 && value < 99) {
+  } else if (value >= 10 && value <= 99) {
     let previousNumberFirst = selector.querySelector('.value-first')
       .textContent;
 
@@ -106,7 +106,7 @@ function stylesOfNumbers(value, selector) {
       //   selector.querySelector('.value-second').classList.add('rotate');
       // }
     }
-  } else if (value >= 99) {
+  } else if (value > 99) {
     let previousNumberFirst = selector.querySelector('.value-first')
       .textContent;
 
